@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magazin Online - Dropshipping</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .product-images {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+        }
+
+        .product-image {
+            width: 100%;
+            min-width: 280px;
+            height: 280px;
+            object-fit: cover;
+            scroll-snap-align: start;
+            border-radius: 4px;
+        }
+
+        .product-info {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .buy-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .product-image {
+                min-width: 240px;
+                height: 240px;
+            }
+        }
+
+        .intro-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1000;
+            background: black;
+        }
+
+        .intro-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #main-content {
+            display: none;
+        }
+
+        #main-content.visible {
+            display: block;
+        }
+
+        /* Stiluri actualizate pentru butonul Welcome */
+        .welcome-button-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            text-align: center;
+        }
+
+        .welcome-button {
+            padding: 15px 30px;
+            font-size: 24px;
+            background: linear-gradient(135deg, 
+                rgba(0, 50, 0, 0.7) 0%,
+                rgba(0, 100, 0, 0.5) 100%);
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            backdrop-filter: blur(5px);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 255, 0, 0.2),
+                0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .welcome-button:hover {
+            background: linear-gradient(135deg, 
+                rgba(0, 70, 0, 0.8) 0%,
+                rgba(0, 120, 0, 0.6) 100%);
+            border-color: #00ff00;
+            transform: scale(1.05);
+            box-shadow: 
+                inset 0 0 30px rgba(0, 255, 0, 0.3),
+                0 0 30px rgba(0, 255, 0, 0.3);
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- Container pentru video intro -->
+    <div class="intro-video-container">
+        <video class="intro-video" autoplay muted loop>
+            <source src="images/heakers.mp4" type="video/mp4">
+        </video>
+        <div class="welcome-button-container">
+            <button class="welcome-button">
+                Welcome to Tech World
+            </button>
+        </div>
+    </div>
+
+    <!-- Conținutul principal -->
+    <div id="main-content">
+        <div class="product-grid">
+            <!-- Produsele vor fi generate dinamic folosind JavaScript -->
+            <!-- Fiecare produs va avea 5 imagini numerotate -->
+            <!-- De exemplu: Produs 1 - imagini 1-5, Produs 2 - imagini 6-10, etc. -->
+        </div>
+    </div>
+
+    <script type="module" src="/src/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productGrid = document.querySelector('.product-grid');
+            
+            // Generăm 30 de produse
+            for(let i = 0; i < 30; i++) {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const productImages = document.createElement('div');
+                productImages.className = 'product-images';
+                
+                // Pentru fiecare produs, adăugăm 5 imagini
+                const startImageNum = i * 5 + 1;
+                for(let j = 0; j < 5; j++) {
+                    const img = document.createElement('img');
+                    img.className = 'product-image';
+                    img.src = `/images/product-${startImageNum + j}.jpg`;
+                    img.alt = `Produs ${i + 1} - Imagine ${j + 1}`;
+                    productImages.appendChild(img);
+                }
+                
+                const productInfo = document.createElement('div');
+                productInfo.className = 'product-info';
+                
+                // Generăm un preț random între 50 și 500 lei
+                const price = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
+                
+                productInfo.innerHTML = `
+                    <h3>Produs ${i + 1}</h3>
+                    <p class="product-price">${price} Lei</p>
+                    <button class="buy-button">Adaugă în coș</button>
+                `;
+                
+                productCard.appendChild(productImages);
+                productCard.appendChild(productInfo);
+                productGrid.appendChild(productCard);
+            }
+
+            const videoContainer = document.querySelector('.intro-video-container');
+            const mainContent = document.getElementById('main-content');
+            const welcomeButton = document.querySelector('.welcome-button');
+            
+            // Când butonul este apăsat, ascundem video-ul și afișăm conținutul
+            welcomeButton.addEventListener('click', () => {
+                videoContainer.classList.add('hidden');
+                mainContent.classList.add('visible');
+            });
+        });
+    </script>
+</body>
+</html>
